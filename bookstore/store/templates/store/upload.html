@@ -1,0 +1,169 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Upload Page</title>
+    <link rel="icon" href="{% static 'store/img/logo.png' %}" type="image/x-icon">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+            margin: 0;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            margin: 0 auto;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+            max-width: 100%;  /* Adjust width to fit any screen */
+            width: 80%;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-size: 16px;
+            font-weight: bold;
+            display: block;
+            margin: 10px 0 5px;
+        }
+
+        select, input[type="file"], textarea, input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box; /* Ensure padding doesn’t affect total width */
+        }
+
+        textarea {
+            height: 120px;
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            background-color: #28a745;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        .delete-button {
+            background-color: #dc3545;
+            color: white;
+            margin-top: 20px;
+        }
+
+        .delete-button:hover {
+            background-color: #c82333;
+        }
+
+        /* Responsive adjustments for smaller devices */
+        @media (max-width: 768px) {
+            .container {
+                width: 90%;  /* Adjust width for smaller screens */
+                padding: 20px; /* Reduce padding on smaller screens */
+            }
+
+            h1 {
+                font-size: 24px;  /* Smaller title font size */
+            }
+
+            label {
+                font-size: 14px; /* Smaller label font size */
+            }
+
+            button {
+                padding: 8px; /* Adjust button padding */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                width: 95%;  /* Use more of the screen width for mobile devices */
+                padding: 15px; /* Reduce padding even more */
+            }
+
+            h1 {
+                font-size: 20px;  /* Smaller title font size for mobile */
+            }
+
+            label {
+                font-size: 13px;  /* Even smaller label font size for mobile */
+            }
+
+            button {
+                padding: 8px; /* Ensure buttons remain usable on small screens */
+                font-size: 14px;  /* Adjust button text size */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Upload a File</h1>
+        <!-- Upload File Form -->
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <label for="category">Select Category to Upload:</label>
+            <select name="category" id="category" required>
+                <option value="self">Self Improvement</option>
+                <option value="financial">Financial Improvement</option>
+                <option value="skills">Skills</option>
+                <option value="skill">Skills</option>
+                <option value="guide">Guide</option>
+                <option value="tutorial">Tutorials</option>
+            </select>
+
+            <label for="file">Choose File:</label>
+            <input type="file" name="file" id="file" accept=".pdf, .doc, .docx, .mp4, .mkv, .avi, .ppt, .pptx" required>
+
+            <label for="description">Description:</label>
+            <textarea name="description" id="description" placeholder="Write a brief description about the file..."></textarea>
+
+            <button type="submit">Upload File</button>
+        </form>
+
+        <!-- Delete File Form -->
+        <h1>Delete a File</h1>
+        <form method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="delete" value="delete"> <!-- Hidden value to distinguish between upload and delete -->
+            
+            <label for="delete_category">Select Category to Delete From:</label>
+            <select name="delete_category" id="delete_category" required>
+                <option value="self">Self Improvement</option>
+                <option value="financial">Financial Improvement</option>
+                <option value="skills">Skills</option>
+                <option value="skill">Skills</option>
+                <option value="guide">Guide</option>
+                <option value="tutorial">Tutorials</option>
+            </select>
+
+            <label for="file_name">Enter File Name (with extension):</label>
+            <input type="text" name="file_name" id="file_name" placeholder="example.pdf, mp4" required>
+
+            <button type="submit" class="delete-button">Delete File</button>
+        </form>
+    </div>
+
+</body>
+</html>
+
