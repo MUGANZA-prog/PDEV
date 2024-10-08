@@ -72,7 +72,7 @@ def upload(request):
 
         else:  # Handle file or link upload
             # Check if the user has been authenticated
-            if not request.session.get('authenticated', False):
+            if not request.session.get('authenticated', True):
                 return HttpResponse("Unauthorized. You must enter the security code first.")
 
             category = request.POST.get('category')  # Get the selected category
