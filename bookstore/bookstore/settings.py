@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-1$+_1vtd2v(qwjhfttff8krro(559w5$h^oocqv&=p=*cw1wpf'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = 'True'
 
-ALLOWED_HOSTS = ['pdev-9kme.onrender.com']
+ALLOWED_HOSTS = ['pdev-9kme.onrender.com', 'localhost', '127.0.0.1']
 
 # Application definition
 INSTALLED_APPS = [
@@ -108,17 +108,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 STATIC_URL = '/static/'
 
-# Directory where collected static files will be stored
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
-# Additional directories to look for static files
-STATICFILES_DIRS = [
-    BASE_DIR / "static",
-]
 
-# Media files (Uploaded content)
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Set maximum file upload size (optional)
 DATA_UPLOAD_MAX_MEMORY_SIZE = 536870912000  # 500GB in bytes
@@ -126,3 +117,20 @@ DATA_UPLOAD_MAX_MEMORY_SIZE = 536870912000  # 500GB in bytes
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+
+
+# Directory where collected static files will be stored (for production)
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # This is where `collectstatic` places collected static files
+
+# Directories where Django will look for static files during development
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),  # This should be your app's static folder, not STATIC_ROOT
+]
+
+# Media files (Uploaded content)
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# Additional configuration for static file handling

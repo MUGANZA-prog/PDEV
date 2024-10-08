@@ -35,7 +35,7 @@
             margin: 10px 0 5px;
         }
 
-        select, input[type="file"], textarea, input[type="text"] {
+        select, input[type="file"], textarea, input[type="text"], input[type="password"] {
             width: 100%;
             padding: 10px;
             margin-bottom: 20px;
@@ -118,6 +118,17 @@
 
     <div class="container">
         <h1>Upload a File</h1>
+
+        {% if not request.session.authenticated %}
+        <!-- Security Code Form -->
+        <form method="POST">
+            {% csrf_token %}
+            <label for="security_code">Enter Security Code:</label>
+            <input type="text" name="security_code" id="security_code" placeholder="Enter security code" required>
+            <input type="hidden" name="security_check" value="1">
+            <button type="submit">Submit Security Code</button>
+        </form>
+        {% else %}
         <!-- Upload File Form -->
         <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
@@ -127,7 +138,6 @@
                 <option value="self">Self Improvement</option>
                 <option value="financial">Financial Improvement</option>
                 <option value="skills">Skills</option>
-                <option value="skill">Skills</option>
                 <option value="guide">Guide</option>
                 <option value="tutorial">Tutorials</option>
             </select>
@@ -145,14 +155,13 @@
         <h1>Delete a File</h1>
         <form method="POST">
             {% csrf_token %}
-            <input type="hidden" name="delete" value="delete"> <!-- Hidden value to distinguish between upload and delete -->
+            <input type="hidden" name="delete" value="delete">
             
             <label for="delete_category">Select Category to Delete From:</label>
             <select name="delete_category" id="delete_category" required>
                 <option value="self">Self Improvement</option>
                 <option value="financial">Financial Improvement</option>
                 <option value="skills">Skills</option>
-                <option value="skill">Skills</option>
                 <option value="guide">Guide</option>
                 <option value="tutorial">Tutorials</option>
             </select>
@@ -162,6 +171,7 @@
 
             <button type="submit" class="delete-button">Delete File</button>
         </form>
+        {% endif %}
     </div>
 
 </body>
